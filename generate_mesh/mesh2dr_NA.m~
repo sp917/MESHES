@@ -96,8 +96,7 @@
   trimesh(tri, xcoord, ycoord, zeros(nx*ny,1));
   xlabel('Longitude')
   ylabel('Latitude')
-  xlim([0 5])
-  ylim([40 50])
+  xlim([])
   view(2)
   
   % Cyclic reduction:
