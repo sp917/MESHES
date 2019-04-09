@@ -30,7 +30,7 @@
   ycoord=reshape(ycoord,[1,nx*ny]); 
   
   % Set a western coastline and remove all nodes lying on land
-  {
+  
   i=1;
   while i < length(xcoord)
       if  ycoord(i) > 3*xcoord(i) + 30  %xcoord(i) < 10 - 0.1*(ycoord(i) - 45).^2 %ycoord(i) < 60 - 6*xcoord(i)
@@ -41,7 +41,7 @@
           i = i + 1;
       end
   end
-  }
+  
   
   tri=[];
   for n=1:nx-1,
@@ -96,8 +96,8 @@
   trimesh(tri, xcoord, ycoord, zeros(nx*ny,1));
   xlabel('Longitude')
   ylabel('Latitude')
-  xlim([0 5])
-  ylim([40 50])
+  %xlim([0 5])
+  %ylim([40 50])
   view(2)
   
   % Cyclic reduction:
