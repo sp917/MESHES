@@ -45,25 +45,21 @@
   
   tri=[];
   for n=1:nx-1,
+      n 
       for nn=1:ny-1
-          if ~(isnan(xcoord(nodnum(nn,n))) |  isnan(xcoord(nodnum(nn+1,n))) | isnan(xcoord(nodnum(nn,n+1))))
             tri=[tri; [nodnum(nn,n),nodnum(nn+1,n),nodnum(nn,n+1)]];
-          end
-          if ~(isnan(xcoord(nodnum(nn+1,n))) |  isnan(xcoord(nodnum(nn+1,n+1))) | isnan(xcoord(nodnum(nn,n+1))))
             tri=[tri; [nodnum(nn+1,n),nodnum(nn+1,n+1),nodnum(nn,n+1)]];
-          end
-      end;
-  end;    
+      end
+  end 
   
   %trimesh(tri, xcoord', ycoord', zeros(nx*ny,1)); 
   %view(2)
   
-  TRI = tri(:);
+  TRI = tri(:); 
   
   %remove nodes connected to only one triangle
   
-  while min(equaltest(TRI,TRI)) < 2
-      
+  while repeattest(TRI) == 0
       for i = 1:length(xcoord)
         S = sum(TRI == i);
         if S <= 1 && ~isnan(xcoord(i))
@@ -76,6 +72,7 @@
       
       tri=[];
       for n=1:nx-1,
+          n
           for nn=1:ny-1
               if ~(isnan(xcoord(nodnum(nn,n))) |  isnan(xcoord(nodnum(nn+1,n))) | isnan(xcoord(nodnum(nn,n+1))))
                 tri=[tri; [nodnum(nn,n),nodnum(nn+1,n),nodnum(nn,n+1)]];
