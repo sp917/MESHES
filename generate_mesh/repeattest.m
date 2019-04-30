@@ -7,7 +7,7 @@ A = A(:); %We only care about the entries, so the shape is not important
 
 repeats = 1;
 for i = 1:length(A)
-    if (sum(A == A(i)) < 1)
+    if (sum(A == A(i)) < 2)
         repeats = 0;
         break
     end

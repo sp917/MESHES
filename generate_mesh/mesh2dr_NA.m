@@ -1,9 +1,9 @@
 % Channel: regular mesh
 % Update: numbering in ijk flavour
-  dx=1/8;    % channel u_wide 1/8
+  dx=1/4;    % channel u_wide 1/8
   %ddx = 1/8; %in case we want to increase the resolution in a certain part of the mesh
   %dy=dx;
-  dy=1/8;   % channel u_wide 1/10
+  dy=1/4;   % channel u_wide 1/10
   %ddy = 1/8; 
   lon=0:dx:40;
   lat=30:dy:60; %we may use a higher resolution in the middle of the domain 
@@ -45,7 +45,6 @@
   
   tri=[];
   for n=1:nx-1,
-      n 
       for nn=1:ny-1
             tri=[tri; [nodnum(nn,n),nodnum(nn+1,n),nodnum(nn,n+1)]];
             tri=[tri; [nodnum(nn+1,n),nodnum(nn+1,n+1),nodnum(nn,n+1)]];
@@ -57,8 +56,7 @@
   
   TRI = tri(:); 
   
-  %remove nodes connected to only one triangle
-  
+  %remove nodes connected to only one triangl
   while repeattest(TRI) == 0
       for i = 1:length(xcoord)
         S = sum(TRI == i);
@@ -72,7 +70,6 @@
       
       tri=[];
       for n=1:nx-1,
-          n
           for nn=1:ny-1
               if ~(isnan(xcoord(nodnum(nn,n))) |  isnan(xcoord(nodnum(nn+1,n))) | isnan(xcoord(nodnum(nn,n+1))))
                 tri=[tri; [nodnum(nn,n),nodnum(nn+1,n),nodnum(nn,n+1)]];
