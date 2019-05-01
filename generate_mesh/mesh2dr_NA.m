@@ -208,7 +208,8 @@
       %zbar=[0:100:1500];
       nl=length(zbar);
       %define depths:
-      depth=-500-3500*sin((ycoord-30)*pi/15.0);
+      depth = -1500 + 100*sin(ycoord*pi/15.0);
+      %depth=-500-3500*sin((ycoord-30)*pi/15.0);
       %depth=-1600*ones(size(xcoord));
       %depth=-100*(xcoord <5.0) - 1600*(xcoord >= 5.0);
       size(depth)
