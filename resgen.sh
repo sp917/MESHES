@@ -24,3 +24,8 @@ else
 	mkdir $(pwd)/results
 	cp $(pwd)/../fesom.clock $(pwd)/results
 fi
+
+cd $(pwd)/results/
+mkdir newdata
+mkdir plots
+mkdir animations

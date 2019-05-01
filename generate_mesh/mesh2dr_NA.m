@@ -207,10 +207,11 @@
       zbar=[0 10 22 35 49 63 79 100 150 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600]; 
       %zbar=[0:100:1500];
       nl=length(zbar);
-      % define depths:
-      %depth=-500-3500*sin((ycoord-30)*pi/15.0);
-      depth=-1600*ones(size(xcoord));
-      %depth=-1500*ones(size(xcoord));
+      %define depths:
+      depth=-500-3500*sin((ycoord-30)*pi/15.0);
+      %depth=-1600*ones(size(xcoord));
+      %depth=-100*(xcoord <5.0) - 1600*(xcoord >= 5.0);
+      size(depth)
       %{
       shelflength = 2.5;
       shelfdepth = -100;
