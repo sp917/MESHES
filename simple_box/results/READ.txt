@@ -1,0 +1,1 @@
+This simulation was run with dt = day/96
