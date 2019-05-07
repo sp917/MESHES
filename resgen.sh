@@ -15,7 +15,7 @@ then
 		echo "Too many results directories. New one cannot be created."
 	else
 		echo "renaming to results"$n"."
-                mv $(pwd)/results $(pwd)/results"$n"
+                mv $(pwd)/results $(pwd)/results_"$n"
 		mkdir results
 		cp $(pwd)/../fesom.clock $(pwd)/results
 	fi
