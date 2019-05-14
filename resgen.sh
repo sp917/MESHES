@@ -29,3 +29,5 @@ cd $(pwd)/results/
 mkdir newdata
 mkdir plots
 mkdir animations
+
+cp ../../continue.sh . 
