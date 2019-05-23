@@ -1,9 +1,9 @@
 % Channel: regular mesh
 % Update: numbering in ijk flavour
-  dx=1/4;    % channel u_wide 1/8
+  dx=1;    % channel u_wide 1/8
   %ddx = 1/8; %in case we want to increase the resolution in a certain part of the mesh
   %dy=dx;
-  dy=1/4;   % channel u_wide 1/10
+  dy=1;   % channel u_wide 1/10
   %ddy = 1/8; 
   lon=0:dx:40;
   lat=30:dy:60; %we may use a higher resolution in the middle of the domain 
@@ -208,9 +208,9 @@
       %zbar=[0:100:1500];
       nl=length(zbar);
       %define depths:
-      depth = -1500 + 100*sin(ycoord*pi/15.0);
+      %depth = -1500 + 100*sin(ycoord*pi/15.0);
       %depth=-500-3500*sin((ycoord-30)*pi/15.0);
-      %depth=-1600*ones(size(xcoord));
+      depth=-1600*ones(size(xcoord));
       %depth=-100*(xcoord <5.0) - 1600*(xcoord >= 5.0);
       size(depth)
       %{
