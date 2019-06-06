@@ -59,7 +59,7 @@ lam_sjp=300.0 !11.111 !100.0
 T0_sjp=22.0 !25.32
 be_sjp=19.0 !24.68
 hinv_sjp=0.0004 
-surf_forcing = 1.1574e-6
+surf_forcing = 1.3e-8  !1.1574e-6
 /
 
 &oce_init3d                               ! initial conditions for tracers
