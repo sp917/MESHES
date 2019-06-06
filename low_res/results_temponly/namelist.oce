@@ -51,7 +51,7 @@ ref_sss_local=.true.
 ref_sss=34.
 i_vert_diff=.true.  ! true
 tracer_adv =2       ! 1=MUSCL, 2=MUSCL+FCT
-newclim=.false.
+newclim=.true.
 Tmax_sjp=22.0		!Choice of temperature profile
 Tmin_sjp=2.0
 z0_sjp=0.0 !-350 !-500.0
