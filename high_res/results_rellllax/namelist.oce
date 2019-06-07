@@ -2,6 +2,7 @@
 
 &oce_dyn
 stress_surf_magnitude = 0.2 	!Coefficient of wind stress. Original is 0.2.
+shift = 6.0
 C_d=0.001             ! Bottom drag, nondimensional
 A_ver= 1.e-4	       ! Vertical viscosity, m^2/s
 laplacian=.false.      ! Use Laplacian viscosity 
