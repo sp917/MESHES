@@ -1,9 +1,9 @@
 % Channel: regular mesh
 % Update: numbering in ijk flavour
-  dx=1;    % channel u_wide 1/8
+  dx=1/16;    % channel u_wide 1/8
   %ddx = 1/8; %in case we want to increase the resolution in a certain part of the mesh
   %dy=dx;
-  dy=1;   % channel u_wide 1/10
+  dy=1/16;   % channel u_wide 1/10
   %ddy = 1/8; 
   lon=0:dx:40;
   lat=30:dy:60; %we may use a higher resolution in the middle of the domain 
@@ -43,20 +43,24 @@
   end
   %}
   
+  disp('creating initial mesh')
+  tic
   tri=[];
   for n=1:nx-1,
       for nn=1:ny-1
             tri=[tri; [nodnum(nn,n),nodnum(nn+1,n),nodnum(nn,n+1)]];
             tri=[tri; [nodnum(nn+1,n),nodnum(nn+1,n+1),nodnum(nn,n+1)]];
       end
-  end 
+  end
+  toc  
   
   %trimesh(tri, xcoord', ycoord', zeros(nx*ny,1)); 
   %view(2)
   
   TRI = tri(:); 
   
-  %remove nodes connected to only one triangl
+  disp('removing nodes connected to only one triangle')
+  tic
   while repeattest(TRI) == 0
       for i = 1:length(xcoord)
         S = sum(TRI == i);
@@ -82,10 +86,12 @@
 
       TRI = tri(:);
   end
+  toc
   
   %tri=delaunay(xcoord, ycoord);
   
-  % plot
+  % plot 
+%{
   figure(1)
   trimesh(tri, xcoord, ycoord, zeros(nx*ny,1));
   xlabel('Longitude')
@@ -93,7 +99,8 @@
   %xlim([0 5])
   %ylim([40 50])
   view(2)
-  
+  %}
+
   % Cyclic reduction:
   % The last ny nodes in xcoord, ycoord are equivalent to 
   % the first ny nodes.
@@ -128,8 +135,8 @@
   %nodes(4,ai)=1;
   
   
-  %Set indices to 1 on boundary:
-  
+  disp('Set indices to 1 on boundary')
+  tic
   TRI = tri(:);
   for i=1:size(xcoord,2)
       %How many times does node i appear in TRI? That is, how many
@@ -139,8 +146,10 @@
          nodes(4,i) = 1 ;
       end
   end
+  toc
   
-  % Mesh distortion:
+  disp('Mesh distortion')
+  tic
   amp=0.4;
   ampx=amp*dx;
   ampy=amp*dy;
@@ -149,18 +158,22 @@
      xcoord(ai)=xcoord(ai)+(ampx*(-0.5+rand([1, length(ai)])));
      ycoord(ai)=ycoord(ai)+(ampy*(-0.5+rand([1, length(ai)]))); 
   end;
- 
+  toc
+
   nodes(2,:)=xcoord;
   nodes(3,:)=ycoord;
-  
+ 
+%{ 
   figure(2)
   plot3(nodes(2,:),nodes(3,:),nodes(4,:),'.');
-  
+  %}
+
   %remove the two edge nodes 1 and nx*ny with respective elements with only one neighbor
   %tri=tri(2:end-1,:);
   %nodes=nodes(:, 2:end-1);
   
-  %Relabel nodes so that they take numbers 1,2,3,...
+  disp('Relabel nodes') % so that they take numbers 1,2,3,...
+  tic
   newnodnum = int64(isnan(xcoord));
   newlen = length(xcoord) - sum(newnodnum);
   newnodnum = 1-newnodnum;
@@ -172,9 +185,11 @@
   end
   
   n2d = newlen;
-  
-  %Remove NaN nodes from xcoords and ycoords
-  
+  toc
+
+
+  disp('Remove NaN nodes from xcoords and ycoords')
+  tic  
   i=1;
   while i <= length(xcoord)
       if isnan(xcoord(i))
@@ -185,26 +200,35 @@
           i = i+1;
       end
   end
-  
-  %Convert triangles to new node numbering
-  
+  toc
+
+  disp('Convert triangles to new node numbering')
+  tic  
   tri = newnodnum(tri);
   nodes(1,:) = newnodnum(nodes(1,:));
-  
+  toc
+
+
+  disp('creating file nod2d.out...') 
+  tic
   % Output 2D mesh 
   fid = fopen('nod2d.out','w');
         fprintf(fid,'%8i \n',n2d);
         fprintf(fid,'%8i %8.4f %8.4f %8i\n',nodes); 
         fclose(fid);
  clear nodes       
-        
- fid=fopen('elem2d.out','w');
-        fprintf(fid,'%8i \n', length(tri(:,1)));
+ toc
+         
+ disp('creating file elem2d.out...')  
+ tic
+ 	fid=fopen('elem2d.out','w');
+ 	fprintf(fid,'%8i \n', length(tri(:,1)));
         fprintf(fid,'%8i %8i %8i\n',tri');
         fclose(fid);
- 
+ toc
+
  % Define levels:
-      zbar=[0 10 22 35 49 63 79 100 150 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1800 2000 2200 2400 2600 2700 2800 3000 3200 3400 3600 3800 4000 4200 4400 4600]; 
+      zbar=[0 10 22 35 49 63 79 100 150 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600] % 1800 2000 2200 2400 2600 2700 2800 3000 3200 3400 3600 3800 4000 4200 4400 4600]; 
       %zbar=[0:100:1500];
       nl=length(zbar);
       %define depths:
@@ -221,19 +245,23 @@
       c = shelfdepth - gradient*shelflength;
       depth= shelfdepth*(xcoord < shelflength) - 1600*(xcoord>slopeend) + (xcoord>=shelflength).*(xcoord<=slopeend).*(gradient*xcoord + c) ;
       %}
-      
+
+           
+      disp('creating file aux3d.out...')  
+      tic
       fid=fopen('aux3d.out', 'w');
       fprintf(fid,'%g\n', nl);
       fprintf(fid,'%g\n', zbar);
       fprintf(fid,'%7.1f\n', depth);
       fclose(fid);
-     
+      toc
  %fid=fopen('xynum.out','w');
  %       fprintf(fid,'%8i %8i\n',[xnum, ynum]);
  %       fclose(fid);
   
 
  % Plot vertical levels
+%{
  chooselat = 45; 
  mindist = min(abs(ycoord - 45));
  ai = find(abs(abs(ycoord - 45) - mindist) < 0.0000001);
@@ -253,5 +281,5 @@
  ylabel('z')
  xlim([0 5])
  hold off
- 
+ %}
 
