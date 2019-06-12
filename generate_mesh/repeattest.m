@@ -4,7 +4,8 @@ function repeats = repeattest(A)
 %   return 1.
 
 A = A(:); %We only care about the entries, so the shape is not important
-
+disp('repeattest')
+tic
 repeats = 1;
 for i = 1:length(A)
     if (sum(A == A(i)) < 2)
@@ -12,6 +13,6 @@ for i = 1:length(A)
         break
     end
 end
-
+toc
 end
 

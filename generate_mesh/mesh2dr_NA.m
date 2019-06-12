@@ -1,7 +1,7 @@
 % Channel: regular mesh
 % Update: numbering in ijk flavour
   dx=1/16;    % channel u_wide 1/8
-  %ddx = 1/8; %in case we want to increase the resolution in a certain part of the mesh
+  %ddx  1/8; %in case we want to increase the resolution in a certain part of the mesh
   %dy=dx;
   dy=1/16;   % channel u_wide 1/10
   %ddy = 1/8; 
@@ -46,7 +46,9 @@
   disp('creating initial mesh')
   tic
   tri=[];
+  disp(nx)
   for n=1:nx-1,
+      disp(n)
       for nn=1:ny-1
             tri=[tri; [nodnum(nn,n),nodnum(nn+1,n),nodnum(nn,n+1)]];
             tri=[tri; [nodnum(nn+1,n),nodnum(nn+1,n+1),nodnum(nn,n+1)]];
@@ -62,6 +64,7 @@
   disp('removing nodes connected to only one triangle')
   tic
   while repeattest(TRI) == 0
+      disp('looking for nodes to remove')
       for i = 1:length(xcoord)
         S = sum(TRI == i);
         if S <= 1 && ~isnan(xcoord(i))
@@ -72,8 +75,11 @@
         end
       end 
       
+      disp('creating new mesh with those values removed')
       tri=[];
+      disp(nx)
       for n=1:nx-1,
+	  disp(n)
           for nn=1:ny-1
               if ~(isnan(xcoord(nodnum(nn,n))) |  isnan(xcoord(nodnum(nn+1,n))) | isnan(xcoord(nodnum(nn,n+1))))
                 tri=[tri; [nodnum(nn,n),nodnum(nn+1,n),nodnum(nn,n+1)]];
@@ -81,8 +87,8 @@
               if ~(isnan(xcoord(nodnum(nn+1,n))) |  isnan(xcoord(nodnum(nn+1,n+1))) | isnan(xcoord(nodnum(nn,n+1))))
                 tri=[tri; [nodnum(nn+1,n),nodnum(nn+1,n+1),nodnum(nn,n+1)]];
               end
-          end;
-      end;    
+          end
+      end    
 
       TRI = tri(:);
   end
