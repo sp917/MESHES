@@ -2,7 +2,7 @@
 
 &oce_dyn
 stress_surf_magnitude = 0.2 	!Coefficient of wind stress. Original is 0.2.
-shift = 6.0 			!Shift the wind forcing northwards
+shift = 3.0
 C_d=0.001             ! Bottom drag, nondimensional
 A_ver= 1.e-4	       ! Vertical viscosity, m^2/s
 laplacian=.false.      ! Use Laplacian viscosity 
@@ -47,20 +47,33 @@ K_hor=150.
 surf_relax_T=0.0
 surf_relax_S=1.929e-06       ! 50m/300days 6.43e-07! m/s 10./(180.*86400.)
 balance_salt_water =.false.   ! balance virtual-salt or freshwater flux or not
-clim_relax=1.1574e-5 !-6        ! 1/s, geometrical information has to be supplied
 ref_sss_local=.true.
 ref_sss=34.
 i_vert_diff=.true.  ! true
 tracer_adv =2       ! 1=MUSCL, 2=MUSCL+FCT
-newclim=.true.
+
 Tmax_sjp=22.0		!Choice of temperature profile
 Tmin_sjp=2.0
-z0_sjp=-350.0 !0.0 !-350 !-500.0
-lam_sjp=100  !300.0 !11.111 !100.0
-T0_sjp=14.0300 !22.0 !25.32
-be_sjp=10.9900 !24.68
+z0_sjp=-350.0 !-350.0 !0.0 !-350 !-500.0
+lam_sjp=100.0  !300.0 !11.111 !100.0
+T0_sjp=14.03 !14.0300 !22.0 !25.32
+be_sjp=10.99 !10.9900 !24.68
 hinv_sjp=0.0004 
+
 surf_forcing = 0.0
+
+clim_relax=1.1574e-5 !-6        ! 1/s, geometrical information has to be supplied
+newclim=.true.
+z0N=-350.0
+lamN=100.0
+T0N=4.5213
+beN=1.4813
+hinvN=0.0004
+z0S=-350.0
+lamS=100.0
+T0S=19.535
+beS=16.495
+hinvS=0.0004
 /
 
 &oce_init3d                               ! initial conditions for tracers
