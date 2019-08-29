@@ -6,17 +6,13 @@ function repeats = repeattest(A)
 A = A(:); %We only care about the entries, so the shape is not important
 disp('repeattest')
 tic
-
-[C,ia,ic] = unique(A);
-a_counts = accumarray(ic,1);
-
-if sum(a_counts==1) == 0
-    repeats = 1;
-else
-    repeats = 0;
+repeats = 1;
+for i = 1:length(A)
+    if (sum(A == A(i)) < 2)
+        repeats = 0;
+        break
+    end
 end
- 
 toc
 end
-
 

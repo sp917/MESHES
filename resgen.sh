@@ -31,3 +31,5 @@ mkdir plots
 mkdir animations
 
 cp ../../continue.sh . 
+
+cd ..
